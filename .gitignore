@@ -1,2 +1,7 @@
 uber-eats-backend/node_modules
 uber-eats-frontend/node_modules
+
+uber-eats-backend/.env
+uber-eats-backend/.env.test
+uber-eats-backend/.env.dev
+uber-eats-backend/.env.prod
