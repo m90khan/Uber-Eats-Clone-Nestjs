@@ -12,6 +12,8 @@ const graphql_1 = require("@nestjs/graphql");
 const typeorm_1 = require("@nestjs/typeorm");
 const restaurants_module_1 = require("./restaurants/restaurants.module");
 const config_1 = require("@nestjs/config");
+const Joi = require("joi");
+const restaurants_entity_1 = require("./restaurants/entities/restaurants.entity");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -21,19 +23,21 @@ AppModule = __decorate([
                 isGlobal: true,
                 envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.test',
                 ignoreEnvFile: process.env.NODE_ENV === 'prod',
+                validationSchema: Joi.object({
+                    NODE_ENV: Joi.string().valid('dev', 'prod'),
+                }),
             }),
             restaurants_module_1.RestaurantsModule,
-            typeorm_1.TypeOrmModule.forRootAsync({
-                useFactory: () => ({
-                    type: 'postgres',
-                    host: process.env.HOST,
-                    port: +process.env.PORT,
-                    username: process.env.USERNAME,
-                    password: String(process.env.PASSWORD),
-                    database: process.env.DATABASE,
-                    synchronize: true,
-                    logging: false,
-                }),
+            typeorm_1.TypeOrmModule.forRoot({
+                type: 'postgres',
+                host: 'localhost',
+                port: 5432,
+                username: 'uxdkhan',
+                password: 'asdf1234',
+                database: 'ubereats',
+                entities: [restaurants_entity_1.Restaurant],
+                synchronize: process.env.NODE_ENV !== 'prod',
+                logging: process.env.NODE_ENV !== 'prod',
             }),
             graphql_1.GraphQLModule.forRoot({
                 autoSchemaFile: true,

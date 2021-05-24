@@ -16,31 +16,44 @@ exports.RestaurantsResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
 const create_restaurant_dto_1 = require("./dtos/create-restaurant.dto");
 const restaurants_entity_1 = require("./entities/restaurants.entity");
+const restaurants_service_1 = require("./restaurants.service");
 let RestaurantsResolver = class RestaurantsResolver {
-    restaurants(vegan) {
-        return [];
+    constructor(restaurantsService) {
+        this.restaurantsService = restaurantsService;
     }
-    createRestaurant(createRestaurantDto) {
-        console.log(createRestaurantDto);
-        return true;
+    restaurants() {
+        return this.restaurantsService.getAll();
+    }
+    async createRestaurant(createRestaurantDto) {
+        try {
+            await this.restaurantsService.createRestaurant(createRestaurantDto);
+            return true;
+        }
+        catch (err) {
+            console.log(err);
+            return false;
+        }
     }
 };
 __decorate([
     graphql_1.Query(() => [restaurants_entity_1.Restaurant]),
-    __param(0, graphql_1.Args('vegan')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Boolean]),
-    __metadata("design:returntype", Array)
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
 ], RestaurantsResolver.prototype, "restaurants", null);
 __decorate([
-    graphql_1.Mutation(() => restaurants_entity_1.Restaurant),
-    __param(0, graphql_1.Args()),
+    graphql_1.Mutation(() => Boolean),
+    __param(0, graphql_1.Args('input')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_restaurant_dto_1.createRestaurantDto]),
-    __metadata("design:returntype", Boolean)
+    __metadata("design:returntype", Promise)
 ], RestaurantsResolver.prototype, "createRestaurant", null);
 RestaurantsResolver = __decorate([
-    graphql_1.Resolver()
+    graphql_1.Resolver(),
+    __metadata("design:paramtypes", [restaurants_service_1.RestaurantsService])
 ], RestaurantsResolver);
 exports.RestaurantsResolver = RestaurantsResolver;
+updateRestaurant();
+{
+}
 //# sourceMappingURL=restaurants.resolver.js.map

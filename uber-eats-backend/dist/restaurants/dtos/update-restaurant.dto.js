@@ -6,13 +6,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createRestaurantDto = void 0;
+exports.updateRestaurantDto = void 0;
 const graphql_1 = require("@nestjs/graphql");
-const restaurants_entity_1 = require("../entities/restaurants.entity");
-let createRestaurantDto = class createRestaurantDto extends graphql_1.OmitType(restaurants_entity_1.Restaurant, ['id'], graphql_1.InputType) {
+const create_restaurant_dto_1 = require("./create-restaurant.dto");
+let updateRestaurantDto = class updateRestaurantDto extends graphql_1.PartialType(create_restaurant_dto_1.createRestaurantDto) {
 };
-createRestaurantDto = __decorate([
+updateRestaurantDto = __decorate([
     graphql_1.InputType()
-], createRestaurantDto);
-exports.createRestaurantDto = createRestaurantDto;
-//# sourceMappingURL=create-restaurant.dto.js.map
+], updateRestaurantDto);
+exports.updateRestaurantDto = updateRestaurantDto;
+//# sourceMappingURL=update-restaurant.dto.js.map
