@@ -26,6 +26,7 @@ import { Restaurant } from './restaurants/entities/restaurants.entity';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
+      port: 5432,
 
       entities: [Restaurant],
       synchronize: process.env.NODE_ENV !== 'prod',
